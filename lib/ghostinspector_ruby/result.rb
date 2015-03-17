@@ -14,7 +14,7 @@ module GhostinspectorRuby
     end
 
     def find
-      response = Faraday.get(api_url
+      response = Faraday.get(api_url)
       result = JSON.parse(response.body)
       code, data = result['code'],result['data']
     end
