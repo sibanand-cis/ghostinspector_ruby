@@ -38,8 +38,8 @@ module GhostinspectorRuby
     end
 
 # Method to find result by id
-    def result
-      Result.new api_key
+    def result id
+      Result.new id,api_key
     end
 
 # Methods for tests
