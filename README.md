@@ -1,6 +1,6 @@
 # GhostinspectorRuby
 
-TODO: Write a gem description
+TODO: API wrapper for ghostinspector
 
 ## Installation
 
@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Will update shortly
+
+- The test cases are not not worth any more as the functionality has changes, needs to add new tests accordingly
 
 ## Contributing
 
