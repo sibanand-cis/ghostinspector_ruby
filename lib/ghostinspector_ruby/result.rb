@@ -4,15 +4,19 @@ module GhostinspectorRuby
 
   class Result
     attr_reader :code, :data
-    def initialize(attributes)
-      @code = attributes["code"]
-      @data = attributes["data"]
+
+    def initialize(id,key)
+       @url = "/results/#{id}?apiKey=#{key}"
     end
 
-    def self.find(result_id)
-      response = Faraday.get("#{API_URL}/results/#{result_id}/?apiKey=#{API_KEY}")
+    def api_url
+      "#{API_URL}#{@url}"
+    end
+
+    def find
+      response = Faraday.get(api_url
       result = JSON.parse(response.body)
-      new(result)
+      code, data = result['code'],result['data']
     end
   end
 end

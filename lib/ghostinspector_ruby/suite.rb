@@ -4,33 +4,32 @@ module GhostinspectorRuby
 
   class Suite
     attr_reader :code, :data
-    def initialize(attributes)
-      @code = attributes["code"]
-      @data = attributes["data"]
+    def initialize(key)
+      @api_key = key
     end
 
-    def self.all
-      response = Faraday.get("#{API_URL}/suites/?apiKey=#{API_KEY}")
+    def all
+      response = Faraday.get("#{API_URL}/suites/?apiKey=#{@api_key}")
       suites = JSON.parse(response.body)
-      new(suites)
+      code, data = suites['code'],suites['data']
     end
 
-    def self.find(suite_id)
-      response = Faraday.get("#{API_URL}/suites/#{suite_id}/?apiKey=#{API_KEY}")
-      attributes = JSON.parse(response.body)
-      new(attributes)
+    def find(suite_id)
+      response = Faraday.get("#{API_URL}/suites/#{suite_id}/?apiKey=#{@api_key}")
+      suite = JSON.parse(response.body)
+      code, data = suite['code'],suite['data']
     end
 
-    def self.execute(suite_id)
-      response = Faraday.get("#{API_URL}/suites/#{suite_id}/execute/?apiKey=#{API_KEY}")
-      execute_response = JSON.parse(response.body)
-      new(execute_response)
+    def execute(suite_id)
+      response = Faraday.get("#{API_URL}/suites/#{suite_id}/execute/?apiKey=#{@api_key}")
+      execute_suite = JSON.parse(response.body)
+      code, data = execute_suite['code'],execute_suite['data']
     end
 
-    def self.get_suite_tests(suite_id)
-       response = Faraday.get("#{API_URL}/suites/#{suite_id}/tests/?apiKey=#{API_KEY}")
-       test_lists = JSON.parse(response.body)
-       new(test_lists)
+    def tests(suite_id)
+      response = Faraday.get("#{API_URL}/suites/#{suite_id}/tests/?apiKey=#{@api_key}")
+      test_lists = JSON.parse(response.body)
+      code, data = test_lists['code'],test_lists['data']
     end
   end
 

@@ -7,34 +7,33 @@ module GhostinspectorRuby
 
   class Test
 
-    attr_reader :code, :data
-    def initialize(attributes)
-      @code = attributes["code"]
-      @data = attributes["data"]
+    def initialize(key,webhook_path=nil)
+      @api_key = key
+      @webhook_url = webhook_path
     end
 
-    def self.all
-      response = Faraday.get("#{API_URL}/tests/?apiKey=#{API_KEY}")
+    def all
+      response = Faraday.get("#{API_URL}/tests/?apiKey=#{@api_key}")
       tests = JSON.parse(response.body)
-      new(tests)
+      code, data = tests['code'],tests['data']
     end
 
-    def self.find(test_id)
-      response = Faraday.get("#{API_URL}/tests/#{test_id}/?apiKey=#{API_KEY}")
+    def find(test_id)
+      response = Faraday.get("#{API_URL}/tests/#{test_id}/?apiKey=#{@api_key}")
       test = JSON.parse(response.body)
-      new(test)
+      code, data = test['code'],test['data']
     end
 
-    def self.execute(test_id)
-      response = Faraday.get("#{API_URL}/tests/#{test_id}/execute/?apiKey=#{API_KEY}")
+    def execute(test_id)
+      response = Faraday.get("#{API_URL}/tests/#{test_id}/execute/?apiKey=#{@api_key}&webhook=#{@webhook_url}")
       result = JSON.parse(response.body)
-      new(result)
+      code, data = result['code'],result['data']
     end
 
-    def self.get_results(test_id)
-      response = Faraday.get("#{API_URL}/tests/#{test_id}/results/?apiKey=#{API_KEY}")
+    def results(test_id)
+      response = Faraday.get("#{API_URL}/tests/#{test_id}/results/?apiKey=#{@api_key}")
       result = JSON.parse(response.body)
-      new(result)
+      code, data = result['code'],result['data']
     end
   end
 end
