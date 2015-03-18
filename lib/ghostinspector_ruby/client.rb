@@ -1,10 +1,5 @@
 module GhostinspectorRuby
   class Client
-    API_SUBHOST = 'api'
-    API_VERSION = 'v1'
-    DEFAULT_OPTIONS = {
-      :site => 'ghostinspector.com'
-    }
 
     attr_accessor :options
 
@@ -18,9 +13,6 @@ module GhostinspectorRuby
       @options[:api_key]
     end
 
-    def site
-      @options[:site]
-    end
 
     def webhook_url
       @options[:webhook_url]
@@ -43,7 +35,7 @@ module GhostinspectorRuby
     end
 
 # Methods for tests
-    def test
+    def test(webhook_url=nil)
       @test ||= Test.new api_key,webhook_url
     end
 # Method for suite
