@@ -7,7 +7,7 @@ module GhostinspectorRuby
 
   class Test
 
-    def initialize(key,webhook_path=nil)
+    def initialize(key,webhook_path)
       @api_key = key
       @webhook_url = webhook_path
     end

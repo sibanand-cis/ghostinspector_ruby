@@ -13,19 +13,16 @@ module GhostinspectorRuby
       @options[:api_key]
     end
 
-
     def webhook_url
       @options[:webhook_url]
     end
-
-    alias host site
 
     def api_host
       [API_SUBHOST, host].join('.')
     end
 
     def store_options(options={})
-      @options ||= DEFAULT_OPTIONS.dup
+      @options = {}
       @options.merge!(options)
     end
 
@@ -35,7 +32,7 @@ module GhostinspectorRuby
     end
 
 # Methods for tests
-    def test(webhook_url=nil)
+    def test
       @test ||= Test.new api_key,webhook_url
     end
 # Method for suite
